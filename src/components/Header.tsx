@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Image from "next/image";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 import { Heart, ShoppingCart, Menu, X } from "lucide-react";
-import Image from "next/image";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
+
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
