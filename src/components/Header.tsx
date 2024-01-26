@@ -4,17 +4,17 @@ import Link from "next/link";
 import Image from "next/image";
 import ThemeSwitcher from "./ThemeSwitcher";
 
-import { Heart, ShoppingCart, Menu, X } from "lucide-react";
+import { Heart, ShoppingCart, Menu, X, SearchIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-
+import { Input } from "./ui/input";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const path = usePathname();
   const isLogedIn = true;
-  const isAdmin = false;
+  const isAdmin = true;
   const links = [
     {
       title: "Home",
@@ -25,10 +25,6 @@ const Header = () => {
       path: "/shop",
     },
     {
-      title: "About",
-      path: "/about",
-    },
-    {
       title: "Contact",
       path: "/contact",
     },
@@ -36,7 +32,13 @@ const Header = () => {
   return (
     <>
       <header className="bg-primary h-16 rounded-xl p-5 flex justify-between items-center shadow-2xl shadow-primary/40 ">
-        <div className="block sm:hidden">{isMenuOpen ? <X onClick={() => setIsMenuOpen(false)} /> : <Menu onClick={() => setIsMenuOpen(true)} />}</div>
+        <div className="block sm:hidden">
+          {isMenuOpen ? (
+            <X onClick={() => setIsMenuOpen(false)} />
+          ) : (
+            <Menu onClick={() => setIsMenuOpen(true)} />
+          )}
+        </div>
         <Link href={"/"}>
           <h2 className="font-bold text-lg">
             <span className="text-secondary">Game</span> store
@@ -56,17 +58,28 @@ const Header = () => {
           ))}
         </div>
         <div className="flex items-center gap-9">
+          <div className="bg-secondary rounded-xl px-2 py-2 flex items-center gap-2">
+            <SearchIcon
+              size={20}
+              className="text-secondary-foreground cursor-pointer"
+            />
+            <input
+              type="text"
+              className="outline-none bg-transparent placeholder:text-muted-foreground placeholder:text-sm text-sm"
+              placeholder="Search For a Game..."
+            />
+          </div>
           <div className="hidden sm:flex items-center gap-3">
             <div className="bg-secondary p-2 rounded-full">
               <ThemeSwitcher />
             </div>
-            <div className="bg-secondary p-2 rounded-full relative">
+            <div className="bg-secondary p-2 rounded-full relative cursor-pointer">
               <ShoppingCart size={20} strokeWidth={1} />
               <span className="absolute -top-2 -right-2 rounded-full p-2 bg-rose-300 w-5 h-5 flex items-center justify-center text-sm">
                 7
               </span>
             </div>
-            <div className="bg-secondary p-2 rounded-full relative">
+            <div className="bg-secondary p-2 rounded-full relative cursor-pointer">
               <Heart size={20} strokeWidth={1} />
               <span className="absolute -top-2 -right-2 rounded-full p-2 bg-rose-300 w-5 h-5 flex items-center justify-center text-sm">
                 0
@@ -81,8 +94,8 @@ const Header = () => {
                 height={37}
                 width={37}
               />
-              <div className="opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-300 bg-secondary w-28 absolute right-0 mt-2 rounded-xl p-3">
-                <div className="w-full h-full flex flex-col items-start gap-3 text-sm">
+              <div className="opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-300 bg-secondary w-28 absolute right-0 mt-2 rounded-xl p-3 z-[1000]">
+                <div className="w-full h-full flex flex-col items-start gap-3 text-sm ">
                   {isAdmin && <button>Dashboard</button>}
                   <span className="text-red-500">Log Out</span>
                 </div>
@@ -101,7 +114,11 @@ const Header = () => {
         </div>
       </header>
       {/* Mobile Menu */}
-      <div className={`${!isMenuOpen ? "opacity-0 invisible" : "opacity-100 visible"} duration-200  w-1/2 h-1/2 bg-secondary fixed top-20 rounded-xl p-5 shadow-xl z-[1000]`}>
+      <div
+        className={`${
+          !isMenuOpen ? "opacity-0 invisible" : "opacity-100 visible"
+        } duration-200  w-1/2 h-1/2 bg-secondary fixed top-20 rounded-xl p-5 shadow-xl z-[1000]`}
+      >
         <div className="w-full h-full flex flex-col gap-6">
           <div className="flex flex-col gap-3 items-center">
             {links.map((link, index) => (

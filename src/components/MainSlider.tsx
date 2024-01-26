@@ -1,14 +1,12 @@
 "use client";
-import Image from "next/image";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 
 import "swiper/css";
-import SwiperNavigation from "./SwiperNavigation";
-import SwiperSingleSlide from "./SwiperSingleSlide";
+import MainSliderSingleSlide from "./SliderSingleSlide";
+import MainSliderNavigation from "./SliderNavigation";
 
-const SwiperSlider = () => {
+const MainSlider = () => {
   return (
     <>
       <Swiper
@@ -17,23 +15,24 @@ const SwiperSlider = () => {
           delay: 2000,
         }}
         navigation={true}
+        grabCursor
         slidesPerView={1}
         modules={[Navigation, Autoplay]}
         className="mySwiper relative rounded-xl shadow-2xl shadow-primary/40"
       >
         <SwiperSlide>
-            <SwiperSingleSlide/>
+          <MainSliderSingleSlide />
         </SwiperSlide>
         <SwiperSlide>
-            <SwiperSingleSlide/>
+          <MainSliderSingleSlide />
         </SwiperSlide>
         <SwiperSlide>
-            <SwiperSingleSlide/>
+          <MainSliderSingleSlide />
         </SwiperSlide>
-        <SwiperNavigation />
+        <MainSliderNavigation />
       </Swiper>
     </>
   );
 };
 
-export default SwiperSlider;
+export default MainSlider;

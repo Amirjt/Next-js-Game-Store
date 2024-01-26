@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { Heart, ShoppingCartIcon } from "lucide-react";
 
-const SwiperSingleSlide = () => {
+const SliderSingleSlide = () => {
   return (
     <div className="relative">
       <Image
@@ -28,4 +28,4 @@ const SwiperSingleSlide = () => {
   );
 };
 
-export default SwiperSingleSlide;
+export default SliderSingleSlide;

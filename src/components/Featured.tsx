@@ -13,7 +13,7 @@ const Featured = () => {
         height={100}
         src={"/r6prev.jpg"}
         alt="prev"
-        className="rounded-xl  shadow-2xl shadow-primary/40"
+        className="rounded-xl shadow-2xl shadow-indigo-500/40"
       />
       <span className="absolute p-2 bg-red-500 top-0 -left-8 rounded-xl -rotate-45 text-sm animate-pulse text-white visible opacity-100 duration-400 group-hover:invisible group-hover:opacity-0">
         Featured
