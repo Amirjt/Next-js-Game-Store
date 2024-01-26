@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} max-w-[1440px] mx-auto h-screen p-2 flex flex-col justify-between`}
+        className={`${inter.className} max-w-[1440px] mx-auto h-screen p-2 flex flex-col gap-10`}
       >
         <NextThemesProvider>
           <Header />

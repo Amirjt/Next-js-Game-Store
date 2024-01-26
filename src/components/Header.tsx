@@ -101,7 +101,7 @@ const Header = () => {
         </div>
       </header>
       {/* Mobile Menu */}
-      <div className={`${!isMenuOpen ? "opacity-0 invisible" : "opacity-100 visible"} duration-200  w-1/2 h-1/2 bg-secondary fixed top-20 rounded-xl p-5 shadow-xl`}>
+      <div className={`${!isMenuOpen ? "opacity-0 invisible" : "opacity-100 visible"} duration-200  w-1/2 h-1/2 bg-secondary fixed top-20 rounded-xl p-5 shadow-xl z-[1000]`}>
         <div className="w-full h-full flex flex-col gap-6">
           <div className="flex flex-col gap-3 items-center">
             {links.map((link, index) => (
