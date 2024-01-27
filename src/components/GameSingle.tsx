@@ -1,7 +1,7 @@
 import { Heart, ShoppingCartIcon } from "lucide-react";
 import Image from "next/image";
 
-const TopGameSingle = () => {
+const GameSingle = () => {
   return (
     <div className="cursor-pointer relative">
       <Image
@@ -33,4 +33,4 @@ const TopGameSingle = () => {
   );
 };
 
-export default TopGameSingle;
+export default GameSingle;

@@ -1,19 +1,19 @@
 import React from "react";
-import TopGameSingle from "./TopGameSingle";
+import GameSingle from "./GameSingle";
 
 const TopGames = () => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-7 gap-3">
-      <TopGameSingle />
-      <TopGameSingle />
-      <TopGameSingle />
-      <TopGameSingle />
-      <TopGameSingle />
-      <TopGameSingle />
-      <TopGameSingle />
-      <TopGameSingle />
-      <TopGameSingle />
-      <TopGameSingle />
+      <GameSingle />
+      <GameSingle />
+      <GameSingle />
+      <GameSingle />
+      <GameSingle />
+      <GameSingle />
+      <GameSingle />
+      <GameSingle />
+      <GameSingle />
+      <GameSingle />
     </div>
   );
 };

@@ -13,7 +13,7 @@ import { Input } from "./ui/input";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const path = usePathname();
-  const isLogedIn = true;
+  const isLogedIn = false;
   const isAdmin = true;
   const links = [
     {
@@ -58,7 +58,7 @@ const Header = () => {
           ))}
         </div>
         <div className="flex items-center gap-9">
-          <div className="bg-secondary rounded-xl px-2 py-2 flex items-center gap-2">
+          <div className="bg-secondary rounded-xl px-2 py-2 hidden sm:flex items-center gap-2">
             <SearchIcon
               size={20}
               className="text-secondary-foreground cursor-pointer"
@@ -73,18 +73,24 @@ const Header = () => {
             <div className="bg-secondary p-2 rounded-full">
               <ThemeSwitcher />
             </div>
-            <div className="bg-secondary p-2 rounded-full relative cursor-pointer">
+            <Link
+              href={"/cart"}
+              className="bg-secondary p-2 rounded-full relative cursor-pointer"
+            >
               <ShoppingCart size={20} strokeWidth={1} />
               <span className="absolute -top-2 -right-2 rounded-full p-2 bg-rose-300 w-5 h-5 flex items-center justify-center text-sm">
                 7
               </span>
-            </div>
-            <div className="bg-secondary p-2 rounded-full relative cursor-pointer">
+            </Link>
+            <Link
+              href={"/favorites"}
+              className="bg-secondary p-2 rounded-full relative cursor-pointer"
+            >
               <Heart size={20} strokeWidth={1} />
               <span className="absolute -top-2 -right-2 rounded-full p-2 bg-rose-300 w-5 h-5 flex items-center justify-center text-sm">
                 0
               </span>
-            </div>
+            </Link>
           </div>
           {isLogedIn ? (
             <div className="cursor-pointer group relative">
@@ -117,7 +123,7 @@ const Header = () => {
       <div
         className={`${
           !isMenuOpen ? "opacity-0 invisible" : "opacity-100 visible"
-        } duration-200  w-1/2 h-1/2 bg-secondary fixed top-20 rounded-xl p-5 shadow-xl z-[1000]`}
+        } duration-200  w-fit h-screen bg-secondary fixed top-20 rounded-xl p-5 shadow-xl z-[1000]`}
       >
         <div className="w-full h-full flex flex-col gap-6">
           <div className="flex flex-col gap-3 items-center">
@@ -138,6 +144,17 @@ const Header = () => {
           <div className="flex items-center justify-between">
             <span>Theme</span>
             <ThemeSwitcher />
+          </div>
+          <div className="border rounded-xl px-2 py-2 flex items-center gap-2">
+            <SearchIcon
+              size={20}
+              className="text-secondary-foreground cursor-pointer"
+            />
+            <input
+              type="text"
+              className="outline-none bg-transparent placeholder:text-muted-foreground placeholder:text-sm text-sm"
+              placeholder="Search For a Game..."
+            />
           </div>
         </div>
       </div>
