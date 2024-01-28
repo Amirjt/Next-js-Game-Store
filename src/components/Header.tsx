@@ -13,7 +13,7 @@ import { Input } from "./ui/input";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const path = usePathname();
-  const isLogedIn = false;
+  const isLogedIn = true;
   const isAdmin = true;
   const links = [
     {
@@ -102,7 +102,9 @@ const Header = () => {
               />
               <div className="opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-300 bg-secondary w-28 absolute right-0 mt-2 rounded-xl p-3 z-[1000]">
                 <div className="w-full h-full flex flex-col items-start gap-3 text-sm ">
-                  {isAdmin && <button>Dashboard</button>}
+                  {isAdmin && (
+                    <Link href={"/dashboard/products"}>Dashboard</Link>
+                  )}
                   <span className="text-red-500">Log Out</span>
                 </div>
               </div>
