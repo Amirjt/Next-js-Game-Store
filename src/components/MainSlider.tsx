@@ -6,7 +6,7 @@ import "swiper/css";
 import MainSliderSingleSlide from "./SliderSingleSlide";
 import MainSliderNavigation from "./SliderNavigation";
 
-const MainSlider = () => {
+const MainSlider = ({ products }: { products: any }) => {
   return (
     <>
       <Swiper
@@ -20,15 +20,11 @@ const MainSlider = () => {
         modules={[Navigation, Autoplay]}
         className="mySwiper relative rounded-xl shadow-2xl shadow-primary/40"
       >
-        <SwiperSlide>
-          <MainSliderSingleSlide />
-        </SwiperSlide>
-        <SwiperSlide>
-          <MainSliderSingleSlide />
-        </SwiperSlide>
-        <SwiperSlide>
-          <MainSliderSingleSlide />
-        </SwiperSlide>
+        {products.map((product: any) => (
+          <SwiperSlide key={product._id}>
+            <MainSliderSingleSlide product={product} />
+          </SwiperSlide>
+        ))}
         <MainSliderNavigation />
       </Swiper>
     </>

@@ -6,15 +6,21 @@ import ThemeSwitcher from "./ThemeSwitcher";
 
 import { Heart, ShoppingCart, Menu, X, SearchIcon } from "lucide-react";
 import { Button } from "./ui/button";
-import { useState } from "react";
-import { usePathname } from "next/navigation";
-import { Input } from "./ui/input";
+import { useContext, useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { Context } from "@/context/MainContext";
 
 const Header = () => {
+  const { favorites, cart } = useContext(Context);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLogedIn, setIsLogedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [search, setSearch] = useState("");
   const path = usePathname();
-  const isLogedIn = true;
-  const isAdmin = true;
+
+  const router = useRouter();
+
   const links = [
     {
       title: "Home",
@@ -29,6 +35,45 @@ const Header = () => {
       path: "/contact",
     },
   ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/api/auth/me");
+        if (res.status === 200) {
+          const data = await res.json();
+          setIsLogedIn(true);
+          setIsAdmin(data.role === "ADMIN");
+        } else {
+          setIsLogedIn(false);
+          setIsAdmin(false);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchData();
+  }, [isLogedIn, isAdmin]);
+
+  const signOut = async () => {
+    const res = await fetch("http://localhost:3000/api/auth/signout");
+    if (res.status === 200) {
+      setIsLogedIn(false);
+      setIsAdmin(false);
+      window.location.reload();
+    }
+  };
+
+  const searchHandler = (e: any) => {
+    if (!search) {
+      return;
+    }
+    if (e.keyCode === 13) {
+      router.push(`/search?q=${search}`);
+    }
+  };
+
   return (
     <>
       <header className="bg-primary h-16 rounded-xl p-5 flex justify-between items-center shadow-2xl shadow-primary/40 ">
@@ -62,11 +107,15 @@ const Header = () => {
             <SearchIcon
               size={20}
               className="text-secondary-foreground cursor-pointer"
+              onClick={searchHandler}
             />
             <input
               type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               className="outline-none bg-transparent placeholder:text-muted-foreground placeholder:text-sm text-sm"
               placeholder="Search For a Game..."
+              onKeyDown={searchHandler}
             />
           </div>
           <div className="hidden sm:flex items-center gap-3">
@@ -78,18 +127,22 @@ const Header = () => {
               className="bg-secondary p-2 rounded-full relative cursor-pointer"
             >
               <ShoppingCart size={20} strokeWidth={1} />
-              <span className="absolute -top-2 -right-2 rounded-full p-2 bg-rose-300 w-5 h-5 flex items-center justify-center text-sm">
-                7
-              </span>
+              {cart?.length !== 0 && (
+                <span className="absolute -top-2 -right-2 rounded-full p-2 bg-rose-300 w-5 h-5 flex items-center justify-center text-sm">
+                  {cart?.length}
+                </span>
+              )}
             </Link>
             <Link
               href={"/favorites"}
               className="bg-secondary p-2 rounded-full relative cursor-pointer"
             >
               <Heart size={20} strokeWidth={1} />
-              <span className="absolute -top-2 -right-2 rounded-full p-2 bg-rose-300 w-5 h-5 flex items-center justify-center text-sm">
-                0
-              </span>
+              {favorites?.length !== 0 && (
+                <span className="absolute -top-2 -right-2 rounded-full p-2 bg-rose-300 w-5 h-5 flex items-center justify-center text-sm">
+                  {favorites?.length}
+                </span>
+              )}
             </Link>
           </div>
           {isLogedIn ? (
@@ -100,12 +153,14 @@ const Header = () => {
                 height={37}
                 width={37}
               />
-              <div className="opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-300 bg-secondary w-28 absolute right-0 mt-2 rounded-xl p-3 z-[1000]">
+              <div className="opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-300 bg-secondary w-28 absolute right-0 mt-2 rounded-xl p-3 z-[2000]">
                 <div className="w-full h-full flex flex-col items-start gap-3 text-sm ">
                   {isAdmin && (
                     <Link href={"/dashboard/products"}>Dashboard</Link>
                   )}
-                  <span className="text-red-500">Log Out</span>
+                  <span onClick={signOut} className="text-red-500">
+                    Log Out
+                  </span>
                 </div>
               </div>
             </div>

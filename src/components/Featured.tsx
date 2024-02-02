@@ -1,17 +1,16 @@
 "use client";
 
-import Image from "next/image";
-
 import { Heart, ShoppingCartIcon } from "lucide-react";
-import { useState } from "react";
 
-const Featured = () => {
+const Featured = ({ products }: { products: any }) => {
+  const featuredP = products.find(
+    (product: any) => product.isFeatured === true
+  );
+
   return (
     <div className="relative group cursor-pointer">
-      <Image
-        width={300}
-        height={100}
-        src={"/r6prev.jpg"}
+      <img
+        src={featuredP?.image}
         alt="prev"
         className="rounded-xl shadow-2xl shadow-indigo-500/40"
       />
@@ -20,11 +19,13 @@ const Featured = () => {
       </span>
       <div className="absolute w-1/3 invisible opacity-0 group-hover:w-1/2 group-hover:visible group-hover:opacity-100 duration-200 h-full top-0 left-0 bottom-0 rounded-xl bg-black bg-opacity-70">
         <div className="w-full h-full flex flex-col items-center justify-center gap-3 p-4">
-          <h3 className="font-bold text-sm text-primary">Rainbow Six Siege</h3>
+          <h3 className="font-bold text-sm text-primary">{featuredP?.title}</h3>
           <span className="font-semibold bg-primary rounded-xl px-2 py-1 text-sm">
-            Action
+            {featuredP?.category}
           </span>
-          <span className="font-bold text-green-500 text-lg">$ 114</span>
+          <span className="font-bold text-green-500 text-lg">
+            $ {featuredP?.price}
+          </span>
           <div className="flex items-center gap-4">
             <Heart
               size={20}

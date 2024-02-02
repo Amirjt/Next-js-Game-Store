@@ -1,3 +1,4 @@
+"use client";
 import {
   Table,
   TableBody,
@@ -8,8 +9,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Context } from "@/context/MainContext";
+import { useContext } from "react";
 
 const CartTable = () => {
+  const { cart, setCart } = useContext(Context);
+
+  const removeHandler = (id: any) => {
+    setCart(cart.filter((item: any) => item._id !== id));
+  };
+
+  const total = cart?.reduce(
+    (acc: any, product: any) => acc + +product.price,
+    0
+  );
+
   return (
     <>
       <Table>
@@ -17,33 +31,30 @@ const CartTable = () => {
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Game</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
+            <TableHead className="text-center">Amount</TableHead>
+            <TableHead className="text-center">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="font-medium w-full">
-              Rainbow Six Siege
-            </TableCell>
-            <TableCell className="text-right">$243</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium w-full">
-              Rainbow Six Siege
-            </TableCell>
-            <TableCell className="text-right">$243</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium w-full">
-              Spider Man Miles Morals
-            </TableCell>
-            <TableCell className="text-right">$23</TableCell>
-          </TableRow>
+          {cart?.map((product: any) => (
+            <TableRow>
+              <TableCell className="font-medium w-full">
+                {product.title}
+              </TableCell>
+              <TableCell className="text-center">${product.price}</TableCell>
+              <TableCell
+                className="text-center cursor-pointer"
+                onClick={() => removeHandler(product._id)}
+              >
+                Remove
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
         <TableFooter>
           <TableRow>
             <TableCell colSpan={3}>Total</TableCell>
-            <TableCell className="text-right">$2,500.00</TableCell>
+            <TableCell className="text-right">${total}</TableCell>
           </TableRow>
         </TableFooter>
       </Table>
